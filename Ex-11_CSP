@@ -1,0 +1,40 @@
+def is_valid(graph, colors, node, color):
+
+    for neighbor in graph[node]:
+        if color == colors[neighbor]:
+            return False
+    return True
+
+def map_coloring(graph, colors, node, m, n):
+
+
+
+    if node == n:
+        return True
+    
+    for i in range(1, m + 1):
+        if is_valid(graph, colors, node, i):
+            colors[node] = i
+            if map_coloring(graph, colors, node + 1, m, n):
+                return True
+            colors[node] = 0
+    
+
+    return False
+
+if __name__ == "__main__":
+    graph = {
+        0: [1, 2],
+        1: [0, 3],
+        2: [0, 3],
+        3: [1, 2, 4],
+        4: [3]
+    }
+    n = 5 
+    m = 3  
+    colors = {node: 0 for node in graph}  
+    
+    if map_coloring(graph, colors, 0, m, n):
+        print("Solution exists: ", colors)
+    else:
+        print("No solution exists")
